@@ -1,15 +1,12 @@
 void *do_sth (void *s){
-	int *number = (int *) s;
-	// do work
-	local = 0;
-	for(int j = 0; j < 10000; j++){
-		pthread_mutex_lock(&mlock);
-		if(*number < local){
-			*number = local;
-		}
-		pthread_mutex_unlock(&mlock)
-		local++;
-	}
+	int *my_cost = (int *) s;
+
+	pthread_mutex_lock(&mlock);
+
+	if(*my_cost < best_cost)
+		best_cost = *my_cost
+		
+	pthread_mutex_unlock(&mlock)
 
 	p_thread_exit(0);
 }
