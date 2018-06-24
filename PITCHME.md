@@ -93,11 +93,11 @@ pthread_join(
 ---?code=sample/pthread_example_2.c&lang=c&title=Pthread+Example+II
 
 @[1,2](Cast the void* argument to int*)
-@[4,7](Perform work)
+@[4-7](Perform work)
 @[9](Save the results)
 @[11](Terminate thread)
 
----?code=sample/pthread_example_2.c&lang=c&title=Pthread+Example+II
+---?code=sample/pthread_example_3.c&lang=c&title=Pthread+Example+III
 
 @[5](Save results at every iteration)
 
@@ -106,10 +106,10 @@ pthread_join(
 
 - Use a global integer instead of an integer array |
 
-```cpp
-if(my_cost < best_cost)
-	best_cost = my_cost
-```
+	```cpp
+	if(my_cost < best_cost)
+		best_cost = my_cost
+	```
 
 - What is the problem when we use concurrent threads? |
 
