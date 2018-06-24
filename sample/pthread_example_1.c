@@ -1,6 +1,6 @@
 main(){
 	int input[num_threads];
-	pthread_t p_threads[MAX_num_threads];
+	pthread_t p_threads[num_threads];
 	for(i=0; i < num_threads; i++){
 		pthread_create(&p_threads[i], do_sth, 
 			(void *)  &input[i]);

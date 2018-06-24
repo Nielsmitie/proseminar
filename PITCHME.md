@@ -76,19 +76,42 @@ pthread_join(
 )
 ```
 @[2-6]
-@[3](Pass a handle to access the thread later on.)
-@[4](A function pointer.)
-@[5](Argument for the function. Pointer to variable or struct.)
+@[3](Pass a handle to access the thread later on)
+@[4](A function pointer)
+@[5](Argument for the function. Pointer to variable or struct)
 
 @[8-11]
 @[9](Thread handle)
-@[10](Writes phtread_exit at ptr location. We use NULL.)
+@[10](Writes phtread_exit at ptr location. We use NULL)
 
 ---?code=sample/pthread_example_1.c&lang=c&title=Pthread+Example+I
-@[2](Create an array entry for every thread. The results will be written to the array.)
-@[3](Create an array for the thread handles.)
-@[4-7](Initialise all threads and assign them a position in the result array.)
-@[8-10](Wait for every thread to terminate.)
+@[2](Create an array entry for every thread. The results will be written to the array)
+@[3](Create an array for the thread handles)
+@[4-7](Initialise all threads and assign them a position in the result array)
+@[8-10](Wait for every thread to terminate)
+
+---?code=sample/pthread_example_2.c&lang=c&title=Pthread+Example+II
+
+@[1,2](Cast the void* argument to int*)
+@[4,7](Perform work)
+@[9](Save the results)
+@[11](Terminate thread)
+
+---?code=sample/pthread_example_2.c&lang=c&title=Pthread+Example+II
+
+@[5](Save results at every iteration)
+
+---
+## Synchronization
+
+- Use a global integer instead of an integer array |
+
+```cpp
+if(my_cost < best_cost)
+	best_cost = my_cost
+```
+
+- What is the problem when we use concurrent threads? |
 
 ---
 
