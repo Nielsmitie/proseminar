@@ -138,7 +138,7 @@ pthread_mutex_unlock(
 
 @[3,7,11](Each time supply a mutex lock)
 
----?code=sample/mutext_lock_example_1.c&lang=cpp&title=Mutex-Lock+Example+I
+---?code=sample/mutex_lock_example_1.c&lang=cpp&title=Mutex-Lock+Example+I
 
 @[1](Create a global lock variable)
 @[2](Global varaible with minimum value)
@@ -146,7 +146,7 @@ pthread_mutex_unlock(
 @[6](Initialize the lock)
 @[7-13](Start the threats and wait for termination)
 
----?code=sample/mutext_lock_example_2.c&lang=cpp&title=Mutex-Lock+Example+II
+---?code=sample/mutex_lock_example_2.c&lang=cpp&title=Mutex-Lock+Example+II
 
 @[4](Lock the critical section)
 @[5,6]()
