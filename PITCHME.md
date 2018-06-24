@@ -27,11 +27,69 @@
 
 "A thread is a single stream of control in the flow of a program."
 
----?code=sample/thread_def.c&lang=c&title=What+are+threads+\?
+---?code=sample/thread.c&lang=c&title=What+are+threads+?
 
-@[1,3-6](Present code found within any repo source file.)
-@[8-18](Without ever leaving your slideshow.)
-@[19-28](Using GitPitch code-presenting with (optional) annotations.)
+@[1,2](Loop over rows and columns)
+@[4,5,6](Multiply elements from row and column vector)
+
+---?code=sample/thread_def.c&lang=c&title=What+are+threads+?
+
+@[3](Each multiplication can be performed by one thread because they are independent of each other)
+
+---
+
+## Advantages of Threads
+
+- Software portability |
+
+- Latency hiding |
+
+- Scheduling and load balancing |
+
+- Widespread use |
+
+---
+
+## POSIX thread API
+
+- IEE standard
+
+- Used for C
+
+- Similar to APIs of other programming languages
+
+---
+
+<p><span class="slide-title">Basics: Creation and termination of threads</span></p>
+
+```c
+// create a thread
+pthread_create(
+	pthread_t *thread_handle,
+	void (*thread_function)(void*),
+ 	void *arg
+)
+// wait for termination of a thread
+pthread_join(
+	pthread_t thread,
+	void **ptr
+)
+```
+@[2-6]
+@[3](Pass a handle to access the thread later on.)
+@[4](A function pointer.)
+@[5](Argument for the function. Pointer to variable or struct.)
+
+@[8-11]
+@[9](Thread handle)
+@[10](Writes phtread_exit at ptr location. We use NULL.)
+
+---?code=sample/pthread_example_1.c.c&lang=c&title=Pthread+Example+I
+@[1](Create an array entry for every thread. The results will be written to the array.)
+@[2](Create an array for the thread handles.)
+@[3-6](Initialise all threads and assign them a position in the result array.)
+@[7-9](Wait for every thread to terminate.)
+
 
 ---
 
