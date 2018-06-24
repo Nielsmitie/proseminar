@@ -1,7 +1,7 @@
 ## Programming Shared Address Space Platforms 
 
-### Fachgebiet System- und Rechnerarchitektur
-#### Presented by Niels Nuthmann
+#### Fachgebiet System- und Rechnerarchitektur
+##### Presented by Niels Nuthmann
 
 ---
 
@@ -18,7 +18,7 @@
 
 - Memory is shared @fa[arrow-right] Communication is implicit
 
-- Problems:
+- Problems: |
    * Express concurrency |
    * Handle synchronization |
    * Minimize overhead |
