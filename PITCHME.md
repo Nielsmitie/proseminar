@@ -1,7 +1,7 @@
-# Programming Shared Address Space Platforms 
+## Programming Shared Address Space Platforms 
 
-## Fachgebiet System- und Rechnerarchitektur
-### Presented by Niels Nuthmann
+### Fachgebiet System- und Rechnerarchitektur
+#### Presented by Niels Nuthmann
 
 ---
 
@@ -9,19 +9,19 @@
 
 - Threads |
 - POSIX thread basics |
-- Synchronization
-- Advanced usage
+- Synchronization |
+- Advanced usage |
 
 ---
 
 ## Shared Address Space Platforms
 
-- Memory is shared @[arrow-right] Communication is implicit
+- Memory is shared @fa[arrow-right] Communication is implicit
 
 - Problems:
-   * Express concurrency
-   * Handle synchronization
-   * Minimize overhead
+   * Express concurrency |
+   * Handle synchronization |
+   * Minimize overhead |
 
 ---
 
