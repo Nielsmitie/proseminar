@@ -104,7 +104,7 @@ pthread_join(
 ---
 ## Synchronization
 
-- Use a global integer instead of an integer array |
+- Use a global integer instead of an integer array
 
 	```cpp
 	if(my_cost < best_cost)

@@ -7,7 +7,7 @@
 theme : simple
 theme-override : assets/css/PITCHME.css
 # theme-override : assets/css/PITCHME.codemax.css
-highlight : monokai
+highlight : mono-blue
 logo : assets/image/luh.png
 transition : none
 published : true
