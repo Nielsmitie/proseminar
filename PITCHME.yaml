@@ -11,5 +11,5 @@ highlight : atom-one-light
 logo : assets/image/luh.png
 transition : none
 published : true
-footnote : "Niels Nuthmann: Programming Shared Address Space Platforms"
+footnote : "Programming Shared Address Space Platforms"
 slide-number : true

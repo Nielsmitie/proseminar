@@ -1,27 +1,31 @@
-# White
+# Programming Shared Address Space Platforms 
 
-### A GitPitch Presentation Template
-
----
-
-## Tips!
-
-<br>
-
-@fa[arrows gp-tip](Press F to go Fullscreen)
-
-@fa[microphone gp-tip](Press S for Speaker Notes)
+## Fachgebiet System- und Rechnerarchitektur
+### Presented by Niels Nuthmann
 
 ---
 
-## Template Features
+## Overview
 
-- Code Presenting |
-- Repo Source, Static Blocks, GIST |
-- Custom CSS Styling |
-- Slideshow Background Image |
-- Slide-specific Background Images |
-- Custom Logo, TOC, and Footnotes |
+- Threads |
+- POSIX thread basics |
+- Synchronization
+- Advanced usage
+
+---
+
+## Shared Address Space Platforms
+
+- Memory is shared @[arrow-right] Communication is implicit
+
+- Problems:
+   * Express concurrency
+   * Handle synchronization
+   * Minimize overhead
+
+---
+
+"A thread is a single stream of control in the flow of a program."
 
 ---?code=sample/go/server.go&lang=golang&title=Golang File
 
