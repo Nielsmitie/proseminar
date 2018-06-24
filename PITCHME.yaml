@@ -11,5 +11,5 @@ highlight : mono-blue
 logo : assets/image/luh.png
 transition : none
 published : true
-footnote : "Programming Shared Address Space Platforms"
+footnote : "Programming Shared Address Space Platforms			26.06.18"
 slide-number : true

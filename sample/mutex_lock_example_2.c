@@ -1,0 +1,15 @@
+void *do_sth (void *s){
+	int *number = (int *) s;
+	// do work
+	local = 0;
+	for(int j = 0; j < 10000; j++){
+		pthread_mutex_lock(&mlock);
+		if(*number < local){
+			*number = local;
+		}
+		pthread_mutex_unlock(&mlock)
+		local++;
+	}
+
+	p_thread_exit(0);
+}

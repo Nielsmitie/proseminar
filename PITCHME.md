@@ -27,12 +27,12 @@
 
 "A thread is a single stream of control in the flow of a program."
 
----?code=sample/thread.c&lang=c&title=What+are+threads+?
+---?code=sample/thread.c&lang=cpp&title=What+are+threads+?
 
 @[1,2](Loop over rows and columns)
 @[4,5,6](Multiply elements from row and column vector)
 
----?code=sample/thread_def.c&lang=c&title=What+are+threads+?
+---?code=sample/thread_def.c&lang=cpp&title=What+are+threads+?
 
 @[3, 7](Each multiplication can be performed by one thread because they are independent of each other)
 
@@ -84,20 +84,20 @@ pthread_join(
 @[9](Thread handle)
 @[10](Writes phtread_exit at ptr location. We use NULL)
 
----?code=sample/pthread_example_1.c&lang=c&title=Pthread+Example+I
+---?code=sample/pthread_example_1.cpp&lang=c&title=Pthread+Example+I
 @[2](Create an array entry for every thread. The results will be written to the array)
 @[3](Create an array for the thread handles)
 @[4-7](Initialise all threads and assign them a position in the result array)
 @[8-10](Wait for every thread to terminate)
 
----?code=sample/pthread_example_2.c&lang=c&title=Pthread+Example+II
+---?code=sample/pthread_example_2.cpp&lang=c&title=Pthread+Example+II
 
 @[1,2](Cast the void* argument to int*)
 @[4-7](Perform work)
 @[9](Save the results)
 @[11](Terminate thread)
 
----?code=sample/pthread_example_3.c&lang=c&title=Pthread+Example+III
+---?code=sample/pthread_example_3.c&lang=cpp&title=Pthread+Example+III
 
 @[5](Save results at every iteration)
 
@@ -112,6 +112,34 @@ pthread_join(
 	```
 
 - What is the problem when we use concurrent threads? |
+
+---
+
+## Mutex-lock
+
+```cpp
+// initialize lock
+pthread_mutex_init(
+	pthread_mutex_t *mutex_lock
+)
+// lock mutex
+pthread_mutex_lock(
+	pthread_mutex_t *mutex_lock
+)
+// unlock mutex
+pthread_mutex_unlock(
+	pthread_mutex_t *mutex_lock
+)
+```
+
+@[2](Initilaize)
+@[2,6](Lock)
+@[2,6,10](Unlock)
+
+@[3,7,11](Each time supply a mutex lock)
+
+---?code=sample/mutext_lock_example_1.c&lang=cpp&title=Pthread+Example+III
+
 
 ---
 
