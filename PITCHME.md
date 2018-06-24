@@ -85,10 +85,10 @@ pthread_join(
 @[10](Writes phtread_exit at ptr location. We use NULL.)
 
 ---?code=sample/pthread_example_1.c&lang=c&title=Pthread+Example+I
-@[1](Create an array entry for every thread. The results will be written to the array.)
-@[2](Create an array for the thread handles.)
-@[3-6](Initialise all threads and assign them a position in the result array.)
-@[7-9](Wait for every thread to terminate.)
+@[2](Create an array entry for every thread. The results will be written to the array.)
+@[3](Create an array for the thread handles.)
+@[4-7](Initialise all threads and assign them a position in the result array.)
+@[8-10](Wait for every thread to terminate.)
 
 ---
 
