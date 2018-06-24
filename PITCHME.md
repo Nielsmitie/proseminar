@@ -149,8 +149,8 @@ pthread_mutex_unlock(
 ---?code=sample/mutex_lock_example_2.c&lang=cpp&title=Mutex-Lock+Example+II
 
 @[4](Lock the critical section)
-@[5,6]()
-@[8](Unlock critical section to allow a different thread access)
+@[6,7]()
+@[9](Unlock critical section to allow a different thread access)
 
 ---
 

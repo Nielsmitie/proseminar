@@ -6,9 +6,7 @@ main(){
 	pthread_mutex_init(&minimum_values_lock);
 	for(i=0; i < num_threads; i++){
 		pthread_create(&p_threads[i], do_sth, 
-			(void *)  &input);
+			(void *)  &input[i]);
 	}
-	for(i=0; i < num_threads; i++){
-		pthread_join(&p_threads[i], NULL);
-	}
+	/* Join threads */
 }
