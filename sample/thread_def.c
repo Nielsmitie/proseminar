@@ -3,4 +3,5 @@ for(row= 0; row < n; row++)
 		create_thread(
 			c[row][column] = dot_product(
 				get_row(a, row),
-				get_row(b, col)));
+				get_row(b, col))
+		);

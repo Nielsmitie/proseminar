@@ -16,7 +16,7 @@
 
 ## Shared Address Space Platforms
 
-- Memory is shared @fa[arrow-right] Communication is implicit
+- Memory is shared @fa[arrow-right] Communication is implicit |
 
 - Problems: |
    * Express concurrency |
@@ -34,7 +34,7 @@
 
 ---?code=sample/thread_def.c&lang=c&title=What+are+threads+?
 
-@[3](Each multiplication can be performed by one thread because they are independent of each other)
+@[3, 7](Each multiplication can be performed by one thread because they are independent of each other)
 
 ---
 
@@ -62,12 +62,12 @@
 
 <p><span class="slide-title">Basics: Creation and termination of threads</span></p>
 
-```c
+```cpp
 // create a thread
 pthread_create(
 	pthread_t *thread_handle,
 	void (*thread_function)(void*),
- 	void *arg
+	void *arg
 )
 // wait for termination of a thread
 pthread_join(
@@ -84,12 +84,11 @@ pthread_join(
 @[9](Thread handle)
 @[10](Writes phtread_exit at ptr location. We use NULL.)
 
----?code=sample/pthread_example_1.c.c&lang=c&title=Pthread+Example+I
+---?code=sample/pthread_example_1.c&lang=c&title=Pthread+Example+I
 @[1](Create an array entry for every thread. The results will be written to the array.)
 @[2](Create an array for the thread handles.)
 @[3-6](Initialise all threads and assign them a position in the result array.)
 @[7-9](Wait for every thread to terminate.)
-
 
 ---
 
