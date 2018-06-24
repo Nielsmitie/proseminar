@@ -27,7 +27,7 @@
 
 "A thread is a single stream of control in the flow of a program."
 
----?code=sample/go/server.go&lang=golang&title=Golang File
+---?code=sample/thread_def.c&lang=c&title=What+are+threads+\?
 
 @[1,3-6](Present code found within any repo source file.)
 @[8-18](Without ever leaving your slideshow.)
