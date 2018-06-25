@@ -25,17 +25,17 @@
 
 Note:
 Was sind “shared address space platforms”
-- Tasks → eigenen Speicher
+- Tasks -> eigenen Speicher
 - Threads teilen sich einen globalen Speicher
-→ Kommunikation implicit(implizit)
+-> Kommunikation implicit(implizit)
 - im Gegensatz zu Message passing
 
 - stattdessen heute mit andern Problemen
-→ Parallelität darstellen Programmierer
-→ synchronisiere, verhindere Probleme (später)
-→ minimiere Overhead
+-> Parallelität darstellen Programmierer
+-> synchronisiere, verhindere Probleme (später)
+-> minimiere Overhead
 
-→ Keine Memory protection → weniger overhead
+-> Keine Memory protection → weniger overhead
 +++
 
 @title['Thread definition']
