@@ -23,20 +23,34 @@
    * Handle synchronization |
    * Minimize overhead |
 
----
+Note:
+Was sind “shared address space platforms”
+- Tasks → eigenen Speicher
+- Threads teilen sich einen globalen Speicher
+→ Kommunikation implicit(implizit)
+- im Gegensatz zu Message passing
+
+- stattdessen heute mit andern Problemen
+→ Parallelität darstellen Programmierer
+→ synchronisiere, verhindere Probleme (später)
+→ minimiere Overhead
+
+→ Keine Memory protection → weniger overhead
++++
+
 @title['Thread definition']
 "A thread is a single stream of control in the flow of a program."
 
----?code=sample/thread.c&lang=cpp&title=What+are+threads+?
++++?code=sample/thread.c&lang=cpp&title=What+are+threads+?
 
 @[1,2](Loop over rows and columns)
 @[4,5,6](Multiply elements from row and column vector)
 
----?code=sample/thread_def.c&lang=cpp&title=What+are+threads+?
++++?code=sample/thread_def.c&lang=cpp&title=What+are+threads+?
 
 @[3, 7](Each multiplication can be performed by one thread because they are independent of each other)
 
----
++++
 
 ## Advantages of Threads
 
@@ -58,7 +72,7 @@
 
 - Similar to APIs of other programming languages
 
----
++++
 
 <p><span class="slide-title">Basics: Creation and termination of threads</span></p>
 
@@ -84,24 +98,25 @@ pthread_join(
 @[9](Thread handle)
 @[10](Writes phtread_exit at ptr location. We use NULL)
 
----?code=sample/pthread_example_1.c&lang=cpp&title=Pthread+Example+I
++++?code=sample/pthread_example_1.c&lang=cpp&title=Pthread+Example+I
 @[2](Create an array entry for every thread. The results will be written to the array)
 @[3](Create an array for the thread handles)
 @[4-7](Initialise all threads and assign them a position in the result array)
 @[8-10](Wait for every thread to terminate)
 
----?code=sample/pthread_example_2.c&lang=cpp&title=Pthread+Example+II
++++?code=sample/pthread_example_2.c&lang=cpp&title=Pthread+Example+II
 
 @[1,2](Cast the void* argument to int*)
 @[4-7](Perform work)
 @[9](Save the results)
 @[11](Terminate thread)
 
----?code=sample/pthread_example_3.c&lang=cpp&title=Pthread+Example+III
++++?code=sample/pthread_example_3.c&lang=cpp&title=Pthread+Example+III
 
 @[5](Save results at every iteration)
 
 ---
+
 ## Synchronization
 
 - Use a global integer instead of an integer array
@@ -113,7 +128,7 @@ pthread_join(
 
 - What is the problem when we use concurrent threads? |
 
----
++++
 
 ## Mutex-lock
 
@@ -138,7 +153,7 @@ pthread_mutex_unlock(
 
 @[3,7,11](Each time supply a mutex lock)
 
----?code=sample/mutex_lock_example_1.c&lang=cpp&title=Mutex-Lock+Example+I
++++?code=sample/mutex_lock_example_1.c&lang=cpp&title=Mutex-Lock+Example+I
 
 @[1](Create a global lock variable)
 @[2](Global varaible with minimum value)
@@ -146,7 +161,7 @@ pthread_mutex_unlock(
 @[6](Initialize the lock)
 @[7-13](Start the threats and wait for termination)
 
----?code=sample/mutex_lock_example_2.c&lang=cpp&title=Mutex-Lock+Example+II
++++?code=sample/mutex_lock_example_2.c&lang=cpp&title=Mutex-Lock+Example+II
 
 @[4](Lock the critical section)
 @[6,7]()
