@@ -9,7 +9,7 @@ theme-override : assets/css/PITCHME.css
 # theme-override : assets/css/PITCHME.codemax.css
 highlight : mono-blue
 logo : assets/image/luh.png
-transition : none
+transition : slide
 published : true
 footnote : "Programming Shared Address Space Platforms			26.06.18"
 slide-number : true
