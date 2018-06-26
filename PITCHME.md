@@ -395,7 +395,7 @@ Note:
 
 - Use: rlock, lock, unlock
 
-+++?image=assets/read_write_lock.png&size=auto
++++?image=assets/read_write_lock.jpg&size=auto
 
 +++
 
