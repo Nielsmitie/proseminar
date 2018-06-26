@@ -396,7 +396,7 @@ Note:
 - Use: rlock, lock, unlock
 
 +++?image=assets/read_write_lock.jpg&size=auto
-@title[Image read-write locks]
+
 +++
 
 ## Barriers
@@ -409,8 +409,6 @@ Note:
 - Wenn alle threads da wake up mit broadcast pthread_cond_broadcast
 
 +++?image=assets/Barrier.png&size=auto
-
-@title[Image barrier]
 
 Note:
 Lieber nicht sagen
