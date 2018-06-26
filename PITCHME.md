@@ -415,6 +415,9 @@ Lieber nicht sagen
 - Nur ein mutex -> Es kann immer nur ein Thread gleichzeitig fortfahren O(n)
 - Methoden um das zu verbessern O(n/p + log(p))
 
+--- 
+## Any Questions?
+
 
 
 
