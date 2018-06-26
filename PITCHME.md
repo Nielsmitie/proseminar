@@ -206,7 +206,7 @@ Cache line invalid gesetzt
 
 	```cpp
 	if(my_cost < best_cost)
-		best_cost = my_cost
+		best_cost = my_cost;
 	```
 
 - What is the problem when we use concurrent threads? |

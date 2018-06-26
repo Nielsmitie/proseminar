@@ -9,6 +9,6 @@ void *consumer(void *consumer_thread_data){
 		task_available = 0;
 		pthread_cond_signal(&cond_queue_empty);
 		pthread_mutex_unlock(&tasK_queue_lock);
-		process(data)
+		process(data);
 	}
 }
