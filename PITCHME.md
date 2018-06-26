@@ -401,8 +401,19 @@ Note:
 
 ## Barriers
 
+- Holds threads until all other threads have reached the barrier
 
+Note:
+- Jeder Thread der ankommt erhöht den Counter
+- solange condition wait
+- Wenn alle threads da wake up mit broadcast pthread_cond_broadcast
 
++++?image=assets/Barrier.png&size=auto
+
+Note:
+Lieber nicht sagen
+- Nur ein mutex -> Es kann immer nur ein Thread gleichzeitig fortfahren O(n)
+- Methoden um das zu verbessern O(n/p + log(p))
 
 
 
