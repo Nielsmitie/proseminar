@@ -346,14 +346,14 @@ Note:
 
 +++?code=sample/cond_mutex_3.c&lang=cpp&title=Producer+-+Consumer+Example+II
 
-@[1]()
-@[2](Enter critical section)
-@[3-5](While no task available wait and relief lock for producer task)
-@[7](Consumer can now take data)
-@[8](Set task_available to 0)
-@[9](Wake up Producer)
-@[10](Unlock critical section)
-@[11](Process the data outside the critical section to increase performance)
+@[2]()
+@[3](Enter critical section)
+@[4-6](While no task available wait and relief lock for producer task)
+@[8](Consumer can now take data)
+@[9](Set task_available to 0)
+@[10](Wake up Producer)
+@[11](Unlock critical section)
+@[12](Process the data outside the critical section to increase performance)
 
 Note:
 - Besondere Betonung darauf, was passiert, wenn noch keine Daten da sind
@@ -395,11 +395,12 @@ Note:
 
 - Use: rlock, lock, unlock
 
-+++?image=assets/read-write.png
++++?image=assets/read_write.png
 
 +++
 
 ## Barriers
+
 
 
 
