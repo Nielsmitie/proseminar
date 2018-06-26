@@ -324,8 +324,8 @@ Note:
 
 ## Producer Consumber Pipeline
 
-- Producer loads data from disk @af[arrow-right] writes it to a queue
-- Consumer takes data from list @af[arrow-right] consumes data by processing it
+- Producer loads data from disk @fa[arrow-right] writes it to a queue
+- Consumer takes data from list @fa[arrow-right] consumes data by processing it
 
 Note:
 - AI learning
@@ -396,7 +396,7 @@ Note:
 - Use: rlock, lock, unlock
 
 +++?image=assets/read_write_lock.jpg&size=auto
-
+@title[Image read-write locks]
 +++
 
 ## Barriers
@@ -409,6 +409,8 @@ Note:
 - Wenn alle threads da wake up mit broadcast pthread_cond_broadcast
 
 +++?image=assets/Barrier.png&size=auto
+
+@title[Image barrier]
 
 Note:
 Lieber nicht sagen
