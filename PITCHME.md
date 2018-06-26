@@ -382,6 +382,28 @@ Note:
 - Read-Write Locks
 - Barriers
 
+Note:
+- Kein Code mehr
+- Sinnvoll für die Praxis
+
++++ 
+## Read-Write Locks
+
+- Example: Database
+- Many read operation
+- Very few write operations
+
+- Use: rlock, lock, unlock
+
++++?image=assets/read-write.png
+
++++
+
+## Barriers
+
+
+
+
 
 
 
