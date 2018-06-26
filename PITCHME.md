@@ -1,7 +1,7 @@
 ## Programming Shared Address Space Platforms 
 
-### Fachgebiet System- und Rechnerarchitektur
-#### Presented by Niels Nuthmann
+#### Fachgebiet System- und Rechnerarchitektur
+##### Presented by Niels Nuthmann
 
 ---
 
@@ -16,109 +16,411 @@
 
 ## Shared Address Space Platforms
 
-- Memory is shared @fa[arrow-right] Communication is implicit
+- Memory is shared @fa[arrow-right] Communication is implicit |
 
-- Problems:
+- Problems: |
    * Express concurrency |
    * Handle synchronization |
    * Minimize overhead |
 
----
+Note:
+Was sind “shared address space platforms”
+- Tasks -> eigenen Speicher
+- Threads teilen sich einen globalen Speicher
+-> Kommunikation implicit(implizit)
+- im Gegensatz zu Message passing
 
+- stattdessen heute mit andern Problemen
+-> Parallelität darstellen Programmierer
+-> synchronisiere, verhindere Probleme (später)
+-> minimiere Overhead
+
+-> Keine Memory protection → weniger overhead
++++
+
+@title['Thread definition']
 "A thread is a single stream of control in the flow of a program."
 
----?code=sample/go/server.go&lang=golang&title=Golang File
++++?code=sample/thread.c&lang=cpp&title=What+are+threads+?
 
-@[1,3-6](Present code found within any repo source file.)
-@[8-18](Without ever leaving your slideshow.)
-@[19-28](Using GitPitch code-presenting with (optional) annotations.)
+@[1,2](Loop over rows and columns)
+@[4,5,6](Multiply elements from row and column vector)
+
+Note:
+Erklärung zu dem Zitat
+
+- Male Bild zur Erklärung
+	- N Zeilen
+	- danach N Spalten
+	- Danach das Ergebnis
+
+- Zeige den Code daran
+
++++?code=sample/thread_def.c&lang=cpp&title=What+are+threads+?
+
+@[3, 7](Each multiplication can be performed by one thread because they are independent of each other)
+
+Note:
+- Alle Prozessoren brauchen zugriff auf Speicher
+
+- Threads Laufzeit stack erzeugt -> bad practice Speicher im lokalen Speicher zu verwenden
+
+- Außerdem wird zugriff auf Globalen Speicher immer langsamer sein als auf Cache
++++
+
+## Advantages of Threads
+
+- Software portability |
+
+- Latency hiding |
+
+- Scheduling and load balancing |
+
+- Widespread use |
+
+Note:
+Software portability
+- Egal wie viele Kerne
+- geht auch auf 1 Kern
+
+Latency Hiding
+- I/O und Kommunikation
+- Wenn Thread wartet übernimmt ein anderer
+
+Scheduling and Load Balancing
+- Erstelle einfach Threads
+-> scheduler kümmert sich um gleiche Auslastung
+- Kein explizites Load Balancing
+
+Widespread use
+- die oben gennanten sachen
+-> easier to write
+- ein standard für viele Probleme
+- Tools sind gut gemacht und viel benutzt
 
 ---
 
-@title[JavaScript Block]
+## POSIX thread API
 
-<p><span class="slide-title">JavaScript Block</span></p>
+- IEE standard
 
-```javascript
-// Include http module.
-var http = require("http");
+- Used for C
 
-// Create the server. Function passed as parameter
-// is called on every request made.
-http.createServer(function (request, response) {
-  // Attach listener on end event.  This event is
-  // called when client sent, awaiting response.
-  request.on("end", function () {
-    // Write headers to the response.
-    // HTTP 200 status, Content-Type text/plain.
-    response.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-    // Send data and end response.
-    response.end('Hello HTTP!');
-  });
+- Similar to APIs of other programming languages
 
-// Listen on the 8080 port.
-}).listen(8080);
+Note:
+Ich werde ein paar Sachen weglassen von parametern
+
+Ich werde sehr einfache code beispiele ohne nutzen verwenden
+
+Im Code werden aus einfachheit ein paar Details vernachlässigt
+
++++
+
+<p><span class="slide-title">Basics: Creation and termination of threads</span></p>
+
+```cpp
+// create a thread
+pthread_create(
+	pthread_t *thread_handle,
+	void (*thread_function)(void*),
+	void *arg
+)
+// wait for termination of a thread
+pthread_join(
+	pthread_t thread,
+	void **ptr
+)
+```
+@[2-6]
+@[3](Pass a handle to access the thread later on)
+@[4](A function pointer)
+@[5](Argument for the function. Pointer to variable or struct)
+
+@[8-11]
+@[9](Thread handle)
+@[10](Writes phtread_exit at ptr location. We use NULL)
+
+Note:
+pthread_create
+- handle is referenz zu thread
+- übergebe Funktion
+- Übergebe argumente für die Funktion
+- Funktion hat Argument void *s
+
+pthread_join
+- threa handle
+- **ptr schreibt pthread_exit zu der Stelle
+- ist meist NULL
+
++++?code=sample/pthread_example_1.c&lang=cpp&title=Pthread+Example+I
+@[2](Create an array entry for every thread. The results will be written to the array)
+@[3](Create an array for the thread handles)
+@[4-7](Initialise all threads and assign them a position in the result array)
+@[8-10](Wait for every thread to terminate)
+
+Note:
+- Jeder Prozess bekommt eigene Nummer
+- Alle prozesse werden gestartet und schreiben in den Speicher ihr Ergebnis
+
+- Warten auf Vollendung der Aufgabe mit join
+
++++?code=sample/pthread_example_2.c&lang=cpp&title=Pthread+Example+II
+
+@[1,2](Cast the void* argument to int*)
+@[4-7](Perform work)
+@[9](Save the results)
+@[11](Terminate thread)
+
+Note:
+- Funktion zum Ausführen
+- Casted die number zu int pointer
+
+- do work macht irgendwas
+
+- update das Ergebnis im globalen Speicher
+
++++?code=sample/pthread_example_3.c&lang=cpp&title=Pthread+Example+III
+
+@[5](Save results at every iteration)
+
+Note:
+- Diesmal wird Nummer direkt geändert
+
+- Wenn so ausgeführt
+- Beobachtung: Läuft viel Langsamer
+
+- Frage ans Publikum warum?
+
+- Array wir für jeden Prozess geladen
+-> wegen Cache lines
+
+- Wenn ein Prozess aktualisiert wird die 
+Cache line invalid gesetzt
+
+---
+
+## Synchronization
+
+- Use a global integer instead of an integer array
+
+	```cpp
+	if(my_cost < best_cost)
+		best_cost = my_cost
+	```
+
+- What is the problem when we use concurrent threads? |
+
+Note:
+Problems:
+- Nicht Deterministisch
+	- Denn scheduling ist random
+- inkonsisten
+	- serialisierung würde zu anderem Ergebnis 			führen
+-> race condition
+(kann nur im parallelen passieren)
+
+- wir wollen also solche kritischen Stellen finden
+
+Und
+
+- diese als atomic operation implementieren
+
+Atomic ist alles, was einen assembler Befehl hat
+
++++
+
+## Mutex-lock
+
+```cpp
+// initialize lock
+pthread_mutex_init(
+	pthread_mutex_t *mutex_lock
+)
+// lock mutex
+pthread_mutex_lock(
+	pthread_mutex_t *mutex_lock
+)
+// unlock mutex
+pthread_mutex_unlock(
+	pthread_mutex_t *mutex_lock
+)
 ```
 
-@[1,2](You can present code inlined within your slide markdown too.)
-@[9-17](Displayed using code-syntax highlighting just like your IDE.)
-@[19-20](Again, all of this without ever leaving your slideshow.)
+@[2](Initilaize)
+@[2,6](Lock)
+@[2,6,10](Unlock)
 
----?gist=onetapbeyond/494e0fecaf0d6a2aa2acadfb8eb9d6e8&lang=scala&title=Scala GIST
+@[3,7,11](Each time supply a mutex lock)
 
-@[23](You can even present code found within any GitHub GIST.)
-@[41-53](GIST source code is beautifully rendered on any slide.)
-@[57-62](And code-presenting works seamlessly for GIST too, both online and offline.)
+Note:
+pthread_mutex_lock
+- übergib einen mutext_lock
+- versucht zu locken
+- wenn unlocked -> lock mutex -> fahre fort
+- wenn locked -> block -> warte auf unlock
 
----
+- kann in deadlock geraten
+-> wirft error
 
-## Template Help
+Pthread_mutex_unlock
+- sollte nach dem verlassen eines kritischen Bereichs ausgeführt werden
+-> neuer Thread kann Sektion betreten
+- sonst Deadlock
 
-- [Code Presenting](https://github.com/gitpitch/gitpitch/wiki/Code-Presenting)
-  + [Repo Source](https://github.com/gitpitch/gitpitch/wiki/Code-Delimiter-Slides), [Static Blocks](https://github.com/gitpitch/gitpitch/wiki/Code-Slides), [GIST](https://github.com/gitpitch/gitpitch/wiki/GIST-Slides) 
-- [Custom CSS Styling](https://github.com/gitpitch/gitpitch/wiki/Slideshow-Custom-CSS)
-- [Slideshow Background Image](https://github.com/gitpitch/gitpitch/wiki/Background-Setting)
-- [Slide-specific Background Images](https://github.com/gitpitch/gitpitch/wiki/Image-Slides#background)
-- [Custom Logo](https://github.com/gitpitch/gitpitch/wiki/Logo-Setting) [TOC](https://github.com/gitpitch/gitpitch/wiki/Table-of-Contents) [Footnotes](https://github.com/gitpitch/gitpitch/wiki/Footnote-Setting)
++++?code=sample/mutex_lock_example_1.c&lang=cpp&title=Mutex-Lock+Example+I
 
----
+@[1](Create a global lock variable)
+@[2](Global varaible with minimum value)
+@[4,5](Two threads with local values)
+@[6](Initialize the lock)
+@[7-13](Start the threats and wait for termination)
 
-## Go GitPitch Pro!
++++?code=sample/mutex_lock_example_2.c&lang=cpp&title=Mutex-Lock+Example+II
 
-<br>
-<div class="left">
-    <i class="fa fa-user-secret fa-5x" aria-hidden="true"> </i><br>
-    <a href="https://gitpitch.com/pro-features" class="pro-link">
-    More details here.</a>
-</div>
-<div class="right">
-    <ul>
-        <li>Private Repos</li>
-        <li>Private URLs</li>
-        <li>Password-Protection</li>
-        <li>Image Opacity</li>
-        <li>SVG Image Support</li>
-    </ul>
-</div>
+@[4](Lock the critical section)
+@[6,7]()
+@[9](Unlock critical section to allow a different thread access)
 
 ---
 
-### Questions?
+## Condition variables for Synchronization
 
-<br>
+- Problem: Normal mutex-locks need to regularly poll the lock
+- Goal: Minimize the overhead of mutex-lock
 
-@fa[twitter gp-contact](@gitpitch)
+- Suspend the thread
+- Wait for a condition to be fullfilled
+- Wake up the thread
 
-@fa[github gp-contact](gitpitch)
++++
 
-@fa[medium gp-contact](@gitpitch)
+## Condition wait and signal
 
----?image=assets/image/gitpitch-audience.jpg&opacity=100
+```cpp
+int pthread_cond_wait(
+	pthread_cond_t *cond,
+	pthread_mutex_t *mutex
+);
 
-@title[Download this Template!]
+int pthread_cond_signal(
+	pthread_cond_t *cond
+);
+```
 
-### <span class="white">Get your presentation started!</span>
-### [Download this template @fa[external-link gp-download]](https://gitpitch.com/template/download/white)
+@[1,4](Suspends the thread and waits)
+@[2](Condition to be fullfilled)
+@[3](Reliefes the lock while waiting and requires it after wake up)
+
+@[6,8](Signales at least one thread to wake up)
+@[7](The condition that is now fullfilled)
+
+Note:
+- Damit kann man coole Sachen machen (später)
+- Wait ist immer in Verbindung mit einem Mutex zu benutzen
+- Weckt mind. 1 Thread. Deshalb benutzt man loop.
+
++++
+
+## Producer Consumber Pipeline
+
+- Producer loads data from disk @fa[arrow-right] writes it to a queue
+- Consumer takes data from list @fa[arrow-right] consumes data by processing it
+
+Note:
+- AI learning
+- Load with mostly idle task
+- Consumer can use 100% CPU all the time
+- There is always data in queue. If queue full Producer stop
+- If queue empty stop consumer
+- both times one is waiting
+- Hier werden wir nur mit starker Vereinfachung
+
++++?code=sample/cond_mutex_1.c&lang=cpp&title=Producer+-+Consumer+Example+I
+
+@[1](Conditions to signal and wait for)
+@[2](One mutex lock for one critical section)
+@[6](At the beginning no task is available)
+@[7,8](Initialize condition varaibles)
+@[9](Initialize Mutex)
+
++++?code=sample/cond_mutex_3.c&lang=cpp&title=Producer+-+Consumer+Example+II
+
+@[2]()
+@[3](Enter critical section)
+@[4-6](While no task available wait and relief lock for producer task)
+@[8](Consumer can now take data)
+@[9](Set task_available to 0)
+@[10](Wake up Producer)
+@[11](Unlock critical section)
+@[12](Process the data outside the critical section to increase performance)
+
+Note:
+- Besondere Betonung darauf, was passiert, wenn noch keine Daten da sind
+
++++?code=sample/cond_mutex_2.c&lang=cpp&title=Producer+-+Consumer+Example+III
+
+@[2](Loop until done)
+@[3](Placeholder for any kind of task)
+@[4](Entering critical section)
+@[5](Best practice to use a loop)
+@[6,7](Release lock and wait for condition to be fullfilled)
+@[9](Inside critical section we can insert the data)
+@[10]()
+@[11](Signal the consumer)
+@[12](Release lock so consumer can enter the critical section)
+
+
+Note:
+- produce outside of critical section for better performance
+- Loop: OS signal can wake up process or broadcast can wake up multiple
+
+---
+
+## Composite Synchronization Constructs
+#### A high-level presentation
+- Read-Write Locks
+- Barriers
+
+Note:
+- Kein Code mehr
+- Sinnvoll für die Praxis
+
++++ 
+## Read-Write Locks
+
+- Example: Database
+- Many read operation
+- Very few write operations
+
+- Use: rlock, lock, unlock
+
++++?image=assets/read_write_lock.jpg&size=auto
+@title[Image read-write locks]
++++
+
+## Barriers
+
+- Holds threads until all other threads have reached the barrier
+
+Note:
+- Jeder Thread der ankommt erhöht den Counter
+- solange condition wait
+- Wenn alle threads da wake up mit broadcast pthread_cond_broadcast
+
++++?image=assets/Barrier.png&size=auto
+
+@title[Image barrier]
+
+Note:
+Lieber nicht sagen
+- Nur ein mutex -> Es kann immer nur ein Thread gleichzeitig fortfahren O(n)
+- Methoden um das zu verbessern O(n/p + log(p))
+
+--- 
+## Any Questions?
+
+
+
+
 
